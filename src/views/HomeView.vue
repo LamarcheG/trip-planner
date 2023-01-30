@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import { useUserStore } from '@/stores/user';
+import { getAuth } from '@firebase/auth';
+
+const user = getAuth();
+const userStore = useUserStore().user?.displayName;
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<template>Welcome {{ userStore }}</template>

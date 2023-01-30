@@ -12,7 +12,9 @@ import './assets/main.css';
 
 const app = createApp(App);
 
-app.use(createPinia());
+const pinia = createPinia();
+
+app.use(pinia);
 app.use(router);
 app.use(VueFire, {
     // imported above but could also just be created here
@@ -22,5 +24,4 @@ app.use(VueFire, {
         VueFireAuth()
     ]
 });
-
 app.mount('#app');

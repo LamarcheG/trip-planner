@@ -1,43 +1,43 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
 import { useUserStore } from '../stores/user';
 
-const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-const user = useUserStore().user;
-
-console.log(user);
-
-function submit() {
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential?.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-            useUserStore().login(user);
-        })
-        .catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-        });
+function login() {
+    useUserStore().login();
+}
+function logout() {
+    useUserStore().logout();
 }
 </script>
 
 <template>
-    <form @submit.prevent="submit">
-        <button type="submit">Register</button>
+    <form @submit.prevent="login">
+        <button type="submit" class="GoogleLogin">Login with Google</button>
     </form>
-
-    <p>{{ user?.displayName }} {{ user?.email }}</p>
+    <form @submit.prevent="logout">
+        <button type="submit" class="logout">Log out</button>
+    </form>
 </template>
+
+<style scoped>
+.GoogleLogin {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.logout {
+    background-color: #f46642;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+</style>
