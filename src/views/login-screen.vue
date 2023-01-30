@@ -3,8 +3,6 @@ import { getAuth, signOut } from 'firebase/auth';
 
 import { useUserStore } from '../stores/user';
 
-const auth = getAuth();
-
 function login() {
     useUserStore().login();
 }
@@ -17,7 +15,7 @@ function logout() {
     <form @submit.prevent="login">
         <button type="submit" class="GoogleLogin">Login with Google</button>
     </form>
-    <form @submit.prevent="logout">
+    <form @submit="logout">
         <button type="submit" class="logout">Log out</button>
     </form>
 </template>
