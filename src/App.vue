@@ -27,36 +27,18 @@ function addEmployee() {
 </script>
 
 <template>
-    <header>
-        <img
-            alt="Vue logo"
-            class="logo"
-            src="@/assets/logo.svg"
-            width="125"
-            height="125"
-        />
-        <div class="wrapper">
-            <HelloWorld msg="You did it!" />
-
-            <nav>
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
-            </nav>
-        </div>
-    </header>
+    <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/register">Register</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
+    </nav>
+    <RouterView />
     <ul>
         <li v-for="employee in employeesCollection" :key="employee.id">
             {{ employee.firstName }} {{ employee.lastName }}
         </li>
     </ul>
-    <form @submit.prevent="addEmployee">
-        <input type="text" v-model="firstName" />
-        <input type="text" v-model="lastName" />
-        <button type="submit">Submit</button>
-    </form>
-    <p>{{ firstName }}</p>
-    <p>{{ lastName }}</p>
-    <RouterView />
 </template>
 
 <style scoped>
