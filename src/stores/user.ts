@@ -9,7 +9,6 @@ import {
     type User
 } from 'firebase/auth';
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
     const auth = getAuth();
@@ -18,6 +17,23 @@ export const useUserStore = defineStore('user', () => {
     const user = useLocalStorage('user', null, {
         serializer: StorageSerializers.object
     });
+
+    const getInitials = () => {
+        var result = '';
+        if (user.value) {
+            const name = user.value.displayName;
+            if (name) {
+                const names = name.split(' ');
+                if (names.length === 1) {
+                    result = names[0].charAt(0);
+                } else {
+                    result = names[0].charAt(0) + names[1].charAt(0);
+                }
+                return result.toLocaleUpperCase();
+            }
+        }
+        return '';
+    };
 
     function login() {
         setPersistence(auth, browserLocalPersistence).catch((error) => {
@@ -33,6 +49,7 @@ export const useUserStore = defineStore('user', () => {
                 const token = credential?.accessToken;
                 // The signed-in user info.
                 user.value = result.user;
+                window.location.reload();
             })
             .catch((error) => {
                 // Handle Errors here.
@@ -49,7 +66,8 @@ export const useUserStore = defineStore('user', () => {
     function logout() {
         signOut(auth);
         user.value = null;
+        window.location.reload();
     }
 
-    return { user, login, logout };
+    return { user, login, logout, getInitials };
 });
