@@ -18,7 +18,7 @@ function logout() {
 
 <template>
     <div class="navContainer">
-        <button v-if="user" @click="toggleMenu">
+        <button v-if="user" class="btn-menuToggle" @click="toggleMenu">
             <img :src="photoURL" class="profilePic" alt="profile picture" />
         </button>
         <div v-if="menuIsOpen">
@@ -32,6 +32,11 @@ function logout() {
 </template>
 
 <style scoped>
+.btn-menuToggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
 .profilePic {
     width: 2rem;
     height: 2rem;
