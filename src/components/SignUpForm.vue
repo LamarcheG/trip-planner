@@ -80,7 +80,7 @@ input {
     outline: none;
 }
 .btnContainer {
-    margin-top: 1rem;
+    margin-top: 2rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -92,10 +92,10 @@ input {
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 0.5rem 1rem;
+    padding: 1rem 0;
     font-size: 1rem;
     cursor: pointer;
-    margin-top: 0.75rem;
+    margin-top: 1rem;
 }
 .btn-GoogleLogin {
     background-color: #4285f4;
