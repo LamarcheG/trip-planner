@@ -49,34 +49,14 @@
             </div>
             <button type="submit">Submit</button>
         </form>
-        <p>{{ title }}</p>
-        <p>{{ startDate }}</p>
-        <p>{{ endDate }}</p>
-        <p>{{ description }}</p>
-        <p>{{ category }}</p>
-        <p>{{ address }}</p>
-        <p>{{ cost }}</p>
-        <p>{{ attendees }}</p>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useActivityStore } from '@/stores/activity';
 import { ref } from 'vue';
 import type { Activity } from './Interfaces';
-
-enum ActivityCategory {
-    Business = 'Business',
-    Entertainment = 'Entertainment',
-    Food = 'Food',
-    Drinks = 'Drinks',
-    Culture = 'Culture',
-    Music = 'Music',
-    Health = 'Health',
-    Hobbies = 'Hobbies',
-    Shopping = 'Shopping',
-    Sports = 'Sports',
-    Travel = 'Travel'
-}
+import { ActivityCategory } from './Interfaces';
 
 const title = ref('');
 const startDate = ref<Date>();
@@ -101,7 +81,18 @@ function createActivity() {
         attendees: attendees.value
     };
 
-    console.log(activity.value);
+    useActivityStore().addActivity(activity.value);
+
+    resetForm();
+}
+function resetForm() {
+    title.value = '';
+    startDate.value = undefined;
+    endDate.value = undefined;
+    description.value = '';
+    category.value = undefined;
+    address.value = '';
+    cost.value = 0;
 }
 </script>
 

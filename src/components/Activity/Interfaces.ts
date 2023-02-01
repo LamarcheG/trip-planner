@@ -1,4 +1,4 @@
-enum ActivityCategory {
+export enum ActivityCategory {
     Business = 'Business',
     Entertainment = 'Entertainment',
     Food = 'Food',
