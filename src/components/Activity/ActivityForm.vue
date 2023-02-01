@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <form @submit.prevent="createActivity">
+    <div class="formContainer">
+        <form @submit.prevent="createActivity" id="Activity">
             <div class="inputField">
                 <label for="title">Title</label>
                 <input type="text" id="title" v-model="title" required />
@@ -14,15 +14,13 @@
                     required
                 />
             </div>
-            <div class="dateSection">
-                <div class="inputField">
-                    <label for="startDate">Start Date</label>
-                    <input type="date" id="startDate" v-model="startDate" />
-                </div>
-                <div class="inputField">
-                    <label for="endDate">End Date</label>
-                    <input type="date" id="endDate" v-model="endDate" />
-                </div>
+            <div class="inputField">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" v-model="startDate" />
+            </div>
+            <div class="inputField">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" v-model="endDate" />
             </div>
             <div class="inputField">
                 <label for="category">Category</label>
@@ -44,10 +42,18 @@
                 <input type="number" id="cost" v-model="cost" />
             </div>
             <div class="inputField">
-                <label for="attendees">Attendees</label>
-                <input type="text" id="attendees" v-model="attendees" />
+                <label for="attendee">Attendees</label>
+                <input type="text" id="attendee" v-model="attendeeInput" />
+                <button @click="addAttendee" type="button">+</button>
             </div>
-            <button type="submit">Submit</button>
+            <ul>
+                <li v-for="attendee in attendees">
+                    {{ attendee }}
+                </li>
+            </ul>
+            <button type="submit" class="btn-submit" form="Activity">
+                Submit
+            </button>
         </form>
     </div>
 </template>
@@ -65,12 +71,13 @@ const description = ref('');
 const category = ref<ActivityCategory>();
 const address = ref('');
 const cost = ref(0);
-const attendees = ref<string[]>();
+const attendeeInput = ref('');
+const attendees = ref<string[]>([]);
 
-const activity = ref<Activity>();
+var activity = undefined;
 
 function createActivity() {
-    activity.value = {
+    activity = {
         title: title.value,
         startDate: startDate.value,
         endDate: endDate.value,
@@ -81,7 +88,7 @@ function createActivity() {
         attendees: attendees.value
     };
 
-    useActivityStore().addActivity(activity.value);
+    useActivityStore().addActivity(activity);
 
     resetForm();
 }
@@ -93,6 +100,12 @@ function resetForm() {
     category.value = undefined;
     address.value = '';
     cost.value = 0;
+    attendeeInput.value = '';
+    attendees.value = [];
+}
+function addAttendee() {
+    attendees.value?.push(attendeeInput.value);
+    attendeeInput.value = '';
 }
 </script>
 
@@ -105,8 +118,13 @@ function resetForm() {
     width: 80%;
 }
 .inputField {
-    margin-top: 1rem;
     font-size: 1rem;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
 }
 label {
     margin-right: 1rem;
@@ -131,8 +149,9 @@ form {
     padding: 3rem 6rem;
     border-radius: 10px;
     width: 70%;
+    margin: 0 auto;
 }
-button {
+.btn-submit {
     width: 12rem;
     color: white;
     border: none;
@@ -140,7 +159,7 @@ button {
     padding: 1rem 1rem;
     font-size: 1rem;
     cursor: pointer;
-    margin-top: 0.75rem;
     background-color: #313438;
+    margin-top: 2rem;
 }
 </style>

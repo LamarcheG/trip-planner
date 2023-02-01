@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import ActivityListItem from './ActivityListItem.vue';
 import type { Activity } from './Interfaces';
 

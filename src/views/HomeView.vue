@@ -16,14 +16,6 @@ const activities = useActivityStore().activities;
 
 <template>
     <div>
-        <p>
-            Welcome
-            {{
-                userStore?.displayName
-                    ? userStore?.displayName
-                    : userStore?.email
-            }}
-        </p>
         <ActivityForm />
         <ActivityList :activities="activities" />
     </div>
