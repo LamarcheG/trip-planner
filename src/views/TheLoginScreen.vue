@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import LoginForm from '@/components/LoginForm.vue';
-import SignUpForm from '@/components/SignUpForm.vue';
+import LoginForm from '@/components/Login/LoginForm.vue';
+import SignUpForm from '@/components/Login/SignUpForm.vue';
 const isSigningUp = ref(false);
 
 function getCurrentComponent() {
@@ -14,7 +14,7 @@ function getCurrentComponent() {
 </script>
 
 <template>
-    <div>
+    <div class="formContainer">
         <component :is="getCurrentComponent()"></component>
         <button
             v-if="!isSigningUp"
@@ -34,13 +34,14 @@ function getCurrentComponent() {
 </template>
 
 <style scoped>
-div {
+.formContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #202020;
     padding: 3rem 2rem;
+    width: 70%;
     border-radius: 10px;
 }
 .btn-login {

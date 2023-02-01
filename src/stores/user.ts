@@ -71,7 +71,7 @@ export const useUserStore = defineStore('user', () => {
                 // The AuthCredential type that was used.
                 const credential =
                     GoogleAuthProvider.credentialFromError(error);
-                // ...
+                console.log(errorCode, errorMessage, email, credential);
             });
     }
     function signupWithPassword(email: string, password: string) {
@@ -84,7 +84,7 @@ export const useUserStore = defineStore('user', () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                // ..
+                console.log(errorCode, errorMessage);
             });
     }
 
@@ -99,6 +99,7 @@ export const useUserStore = defineStore('user', () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
             });
     }
 

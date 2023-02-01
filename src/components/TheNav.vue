@@ -8,9 +8,11 @@ const user = userStore?.user;
 const photoURL = user?.photoURL;
 
 const menuIsOpen = ref(false);
+
 function toggleMenu() {
     menuIsOpen.value = !menuIsOpen.value;
 }
+
 function logout() {
     useUserStore().logout();
 }
@@ -26,7 +28,6 @@ function logout() {
         </div>
         <nav v-if="user" class="navbar">
             <RouterLink to="/" class="link">Home</RouterLink>
-            <RouterLink to="/login" class="link">Login</RouterLink>
         </nav>
     </div>
 </template>
