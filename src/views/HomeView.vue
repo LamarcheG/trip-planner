@@ -8,7 +8,7 @@ import { collection, doc } from '@firebase/firestore';
 
 const db = useFirestore();
 const userRef = useCollection(collection(db, 'Users'));
-const user = useDocument(doc(db, 'Users', 'Z40F70yLLjojznBZ7dG9'));
+const user = useDocument(doc(db, 'Users', useUserStore().user?.uid));
 
 const activities = useActivityStore().activities;
 </script>
@@ -17,10 +17,11 @@ const activities = useActivityStore().activities;
     <div>
         <ActivityForm />
         <ActivityList :activities="activities" />
-        <ul>
-            <li v-for="user in userRef" :key="user.id">
-                {{ user.email }}
-            </li>
-        </ul>
+        <div>
+            <h1>User</h1>
+            <ul>
+                <li v-for="(value, key) in user">{{ key }}: {{ value }}</li>
+            </ul>
+        </div>
     </div>
 </template>
