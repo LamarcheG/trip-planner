@@ -1,6 +1,6 @@
 <template>
     <ul class="infoContainer">
-        <li v-for="(value, key) in activity" class="info">
+        <li v-for="(value, key) in trip" class="info">
             <h2>{{ key }}</h2>
             <p v-if="Array.isArray(value)">
                 {{ formatAttendees(value) }}
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Activity } from './Interfaces';
+import type { Trip } from './Interfaces';
 
 function formatAttendees(attendees: string[]) {
     // display as Person1, Person2 and Person3
@@ -25,7 +25,7 @@ function formatAttendees(attendees: string[]) {
 }
 
 const props = defineProps<{
-    activity: Activity;
+    trip: Trip;
 }>();
 </script>
 

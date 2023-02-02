@@ -1,11 +1,9 @@
 <template>
-    <div>
-        <ActivityListItem
-            v-for="activity in activities"
-            :key="activity.title"
-            :activity="activity"
-        />
-    </div>
+    <ActivityListItem
+        v-for="activity in activities"
+        :key="activity.title"
+        :activity="activity"
+    />
 </template>
 
 <script setup lang="ts">

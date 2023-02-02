@@ -45,9 +45,6 @@ function logout() {
     margin-left: 1.5rem;
 }
 .navContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
     display: flex;
     align-items: center;
     width: 100%;

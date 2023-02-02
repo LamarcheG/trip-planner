@@ -1,6 +1,6 @@
 <template>
-    <form @submit.prevent="createActivity" id="Activity">
-        <h1>Activity</h1>
+    <form @submit.prevent="createTrip" id="Trip">
+        <h1>Trip</h1>
         <div class="inputField">
             <label for="title">Title</label>
             <input type="text" id="title" v-model="title" required />
@@ -23,20 +23,8 @@
             <input type="date" id="endDate" v-model="endDate" />
         </div>
         <div class="inputField">
-            <label for="category">Category</label>
-            <select name="category" id="category" v-model="category">
-                <option v-for="category in ActivityCategory" :value="category">
-                    {{ category }}
-                </option>
-            </select>
-        </div>
-        <div class="inputField">
-            <label for="address">Address</label>
-            <input type="text" id="address" v-model="address" />
-        </div>
-        <div class="inputField">
-            <label for="cost">Cost</label>
-            <input type="number" id="cost" v-model="cost" />
+            <label for="budget">Budget</label>
+            <input type="number" id="budget" v-model="budget" />
         </div>
         <div class="inputField">
             <label for="attendee">Attendees</label>
@@ -48,54 +36,50 @@
                 {{ attendee }}
             </li>
         </ul>
-        <button type="submit" class="btn-submit" form="Activity">Submit</button>
+        <button type="submit" class="btn-submit" form="Trip">Submit</button>
     </form>
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from '@/stores/activity';
+import { useTripStore } from '@/stores/trip';
 import { ref } from 'vue';
-import { ActivityCategory } from './Interfaces';
+import type { Trip } from './Interfaces';
 
 const title = ref('');
 const startDate = ref<Date>();
 const endDate = ref<Date>();
 const description = ref('');
-const category = ref<ActivityCategory>();
-const address = ref('');
-const cost = ref(0);
+const budget = ref(0);
 const attendeeInput = ref('');
 const attendees = ref<string[]>([]);
 
-var activity = undefined;
+var trip = undefined;
 
-function createActivity() {
-    activity = {
+function createTrip() {
+    trip = {
         title: title.value,
         startDate: startDate.value,
         endDate: endDate.value,
         description: description.value,
-        category: category.value,
-        address: address.value,
-        cost: cost.value,
+        budget: budget.value,
         attendees: attendees.value
-    };
+    } as Trip;
 
-    useActivityStore().addActivity(activity);
+    useTripStore().addTrip(trip);
 
     resetForm();
 }
+
 function resetForm() {
     title.value = '';
     startDate.value = undefined;
     endDate.value = undefined;
     description.value = '';
-    category.value = undefined;
-    address.value = '';
-    cost.value = 0;
+    budget.value = 0;
     attendeeInput.value = '';
     attendees.value = [];
 }
+
 function addAttendee() {
     attendees.value?.push(attendeeInput.value);
     attendeeInput.value = '';
@@ -103,6 +87,9 @@ function addAttendee() {
 </script>
 
 <style scoped>
+#Trip {
+    margin: 3rem auto;
+}
 .inputField {
     font-size: 1rem;
     width: 60%;

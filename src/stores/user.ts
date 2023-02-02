@@ -1,12 +1,8 @@
 import router from '@/router';
 import { useLocalStorage, StorageSerializers } from '@vueuse/core';
 import {
-    browserLocalPersistence,
-    createUserWithEmailAndPassword,
     getAuth,
     GoogleAuthProvider,
-    setPersistence,
-    signInWithEmailAndPassword,
     signInWithPopup,
     signOut
 } from 'firebase/auth';
@@ -14,13 +10,6 @@ import { doc, setDoc } from 'firebase/firestore';
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
 import { useFirestore } from 'vuefire';
-
-interface User {
-    displayName: string;
-    email: string;
-    photoURL: string;
-    uid: string;
-}
 
 export const useUserStore = defineStore('user', () => {
     const auth = getAuth();
