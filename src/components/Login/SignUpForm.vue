@@ -13,55 +13,14 @@ const confirmPasswordError = ref('');
 function login() {
     useUserStore().loginWithGoogle();
 }
-function signUpWithPassword() {
-    if (!email.value || !password.value) {
-        return;
-    } else if (password.value.length < 6) {
-        passwordError.value = 'Password must be at least 6 characters';
-        return;
-    } else if (password.value !== confirmPassword.value) {
-        confirmPasswordError.value = 'Passwords do not match';
-        return;
-    }
-    useUserStore().signupWithPassword(email.value, password.value);
-}
 </script>
 
 <template>
     <div>
         <h1>Sign up</h1>
-        <form
-            @submit.prevent="signUpWithPassword"
-            class="form-signUpWithPassword"
-            id="signUpWithPassword"
-        >
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" v-model="firstName" required />
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" v-model="lastName" required />
-            <label for="email">Email</label>
-            <input type="email" id="email" v-model="email" required />
-            <label for="password">Password</label>
-            <p v-if="passwordError">{{ passwordError }}</p>
-            <input type="password" id="password" v-model="password" required />
-            <label for="confirmPassword">Confirm Password</label>
-            <p v-if="confirmPasswordError">{{ confirmPasswordError }}</p>
-            <input
-                type="password"
-                id="confirmPassword"
-                v-model="confirmPassword"
-                required
-            />
-        </form>
+
         <form @submit.prevent="login" id="loginWithGoogle"></form>
         <div class="btnContainer">
-            <button
-                type="submit"
-                class="btn-PasswordLogin btn-login"
-                form="signUpWithPassword"
-            >
-                Sign up
-            </button>
             <button
                 type="submit"
                 class="btn-GoogleLogin btn-login"

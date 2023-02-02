@@ -1,3 +1,4 @@
+import router from '@/router';
 import { useLocalStorage, StorageSerializers } from '@vueuse/core';
 import {
     browserLocalPersistence,
@@ -9,8 +10,10 @@ import {
     signInWithPopup,
     signOut
 } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
+import { useFirestore } from 'vuefire';
 
 interface User {
     displayName: string;
@@ -47,11 +50,6 @@ export const useUserStore = defineStore('user', () => {
     };
 
     function loginWithGoogle() {
-        setPersistence(auth, browserLocalPersistence).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
         signInWithPopup(auth, provider)
             .then((result) => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
@@ -60,7 +58,8 @@ export const useUserStore = defineStore('user', () => {
                 const token = credential?.accessToken;
                 // The signed-in user info.
                 user.value = result.user;
-                window.location.reload();
+                addUserToDB();
+                router.push('/');
             })
             .catch((error) => {
                 // Handle Errors here.
@@ -74,33 +73,17 @@ export const useUserStore = defineStore('user', () => {
                 console.log(errorCode, errorMessage, email, credential);
             });
     }
-    function signupWithPassword(email: string, password: string) {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in
-                user.value = userCredential.user;
-                window.location.reload();
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-            });
-    }
 
-    function loginWithPassword(email: string, password: string) {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in
-                user.value = userCredential.user;
-                window.location.reload();
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
+    function addUserToDB() {
+        const db = useFirestore();
+        if (user.value) {
+            const userRef = doc(db, 'Users', user.value.uid);
+            setDoc(userRef, {
+                displayName: user.value.displayName,
+                email: user.value.email,
+                photoURL: user.value.photoURL
             });
+        }
     }
 
     function logout() {
@@ -112,8 +95,6 @@ export const useUserStore = defineStore('user', () => {
     return {
         user,
         loginWithGoogle,
-        signupWithPassword,
-        loginWithPassword,
         logout,
         getInitials,
         isLoggedIn

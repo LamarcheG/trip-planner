@@ -9,40 +9,14 @@ const passwordError = ref('');
 function login() {
     useUserStore().loginWithGoogle();
 }
-function loginWithPassword() {
-    if (!email.value || !password.value) {
-        return;
-    } else if (password.value.length < 6) {
-        passwordError.value = 'Password must be at least 6 characters';
-        return;
-    }
-    useUserStore().loginWithPassword(email.value, password.value);
-}
 </script>
 
 <template>
     <div>
         <h1>Login</h1>
-        <form
-            @submit.prevent="loginWithPassword"
-            class="form-loginWithPassword"
-            id="loginWithPassword"
-        >
-            <label for="email">Email</label>
-            <input type="email" id="email" v-model="email" />
-            <label for="password">Password</label>
-            <p v-if="passwordError">{{ passwordError }}</p>
-            <input type="password" id="password" v-model="password" />
-        </form>
+
         <form @submit.prevent="login" id="loginWithGoogle"></form>
         <div class="btnContainer">
-            <button
-                type="submit"
-                class="btn-PasswordLogin btn-login"
-                form="loginWithPassword"
-            >
-                Login
-            </button>
             <button
                 type="submit"
                 class="btn-GoogleLogin btn-login"
