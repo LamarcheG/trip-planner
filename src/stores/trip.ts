@@ -9,23 +9,42 @@ import {
     serverTimestamp
 } from 'firebase/firestore';
 import { useUserStore } from './user';
+import { FirebaseAuth } from '@/firebaseInit';
+import type { Unsubscribe } from 'firebase/auth';
 
 export const useTripStore = defineStore('trip', () => {
     const trips = ref<Trip[]>([]);
+
     const currentUserUID = useUserStore().user?.uid;
-
     const tripCollection = collection(db, 'Users', currentUserUID, 'Trips');
+    // const unsubscribe = onSnapshot(tripCollection, (querySnapshot) => {
+    //     trips.value = querySnapshot.docs.map((doc) => {
+    //         return {
+    //             title: doc.id,
+    //             ...doc.data()
+    //         } as Trip;
+    //     });
+    // });
 
-    const unsubscribe = onSnapshot(tripCollection, (querySnapshot) => {
-        trips.value = querySnapshot.docs.map((doc) => {
-            return {
-                title: doc.id,
-                ...doc.data()
-            } as Trip;
-        });
+    // //check if user is logged in, if not, unsubscribe from the collection
+    // if (!useUserStore().isLoggedIn) unsubscribe();
+
+    var unsubscribe: Unsubscribe;
+
+    FirebaseAuth.onAuthStateChanged((user) => {
+        if (user) {
+            unsubscribe = onSnapshot(tripCollection, (querySnapshot) => {
+                trips.value = querySnapshot.docs.map((doc) => {
+                    return {
+                        title: doc.id,
+                        ...doc.data()
+                    } as Trip;
+                });
+            });
+        } else {
+            unsubscribe && unsubscribe();
+        }
     });
-    // Unsubscribe from changes when user logs out
-    useUserStore().user && unsubscribe();
 
     function addTrip(trip: Trip) {
         addDoc(tripCollection, {
