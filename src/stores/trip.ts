@@ -17,17 +17,6 @@ export const useTripStore = defineStore('trip', () => {
 
     const currentUserUID = useUserStore().user?.uid;
     const tripCollection = collection(db, 'Users', currentUserUID, 'Trips');
-    // const unsubscribe = onSnapshot(tripCollection, (querySnapshot) => {
-    //     trips.value = querySnapshot.docs.map((doc) => {
-    //         return {
-    //             title: doc.id,
-    //             ...doc.data()
-    //         } as Trip;
-    //     });
-    // });
-
-    // //check if user is logged in, if not, unsubscribe from the collection
-    // if (!useUserStore().isLoggedIn) unsubscribe();
 
     var unsubscribe: Unsubscribe;
 
@@ -50,10 +39,10 @@ export const useTripStore = defineStore('trip', () => {
         addDoc(tripCollection, {
             title: trip.title,
             description: trip.description,
-            startDate: trip.startDate ? trip.startDate : serverTimestamp(),
-            endDate: trip.endDate ? trip.endDate : serverTimestamp(),
-            budget: trip.budget ? trip.budget : 0,
-            attendees: trip.attendees ? trip.attendees : []
+            startDate: trip.startDate ? trip.startDate : null,
+            endDate: trip.endDate ? trip.endDate : null,
+            budget: trip.budget ? trip.budget : null,
+            attendees: trip.attendees ? trip.attendees : null
         });
     }
 
