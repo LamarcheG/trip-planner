@@ -6,15 +6,6 @@
                 <p v-if="Array.isArray(value)">
                     {{ formatAttendees(value) }}
                 </p>
-                <p v-else-if="key === 'startDate' || key === 'endDate'">
-                    {{
-                        new Date(value as Date).toLocaleDateString('en-CA', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit'
-                        })
-                    }}
-                </p>
                 <p v-else>{{ value }}</p>
             </li>
         </div>
