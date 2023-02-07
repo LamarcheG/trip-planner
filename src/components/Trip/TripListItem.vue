@@ -1,19 +1,22 @@
 <template>
-    <ul class="infoContainer">
-        <div v-for="(value, key) in trip">
-            <li v-if="value !== null" class="info">
-                <h2>{{ key }}</h2>
-                <p v-if="Array.isArray(value)">
-                    {{ formatAttendees(value) }}
-                </p>
-                <p v-else>{{ value }}</p>
-            </li>
-        </div>
-    </ul>
+    <RouterLink :to="{ name: 'activities', params: { id: trip.title } }">
+        <ul class="infoContainer">
+            <div v-for="(value, key) in trip">
+                <li v-if="value !== null" class="info">
+                    <h2>{{ key }}</h2>
+                    <p v-if="Array.isArray(value)">
+                        {{ formatAttendees(value) }}
+                    </p>
+                    <p v-else>{{ value }}</p>
+                </li>
+            </div>
+        </ul>
+    </RouterLink>
 </template>
 
 <script setup lang="ts">
 import type { Trip } from './Interfaces';
+import { RouterLink } from 'vue-router';
 
 function formatAttendees(attendees: string[]) {
     // display as Person1, Person2 and Person3

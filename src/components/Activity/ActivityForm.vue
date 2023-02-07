@@ -103,6 +103,9 @@ function addAttendee() {
 </script>
 
 <style scoped>
+#Activity {
+    margin: 3rem auto;
+}
 .inputField {
     font-size: 1rem;
     width: 60%;

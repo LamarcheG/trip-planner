@@ -29,6 +29,9 @@ function logout() {
         <nav v-if="user" class="navbar">
             <RouterLink to="/" class="link">Home</RouterLink>
         </nav>
+        <nav v-if="user" class="navbar">
+            <RouterLink to="/Trips" class="link">Trips</RouterLink>
+        </nav>
     </div>
 </template>
 
