@@ -42,7 +42,7 @@ export const useTripStore = defineStore('trip', () => {
             startDate: trip.startDate ? trip.startDate : null,
             endDate: trip.endDate ? trip.endDate : null,
             budget: trip.budget ? trip.budget : null,
-            attendees: trip.attendees ? trip.attendees : null
+            attendees: trip.attendees?.length || 0 > 0 ? trip.attendees : null
         });
     }
 
