@@ -5,7 +5,7 @@
                 <li v-if="value !== null" class="info">
                     <h2>{{ key }}</h2>
                     <p v-if="Array.isArray(value)">
-                        {{ formatAttendees(value) }}
+                        {{ tripstore.formatAttendees(value) }}
                     </p>
                     <p v-else>{{ value }}</p>
                 </li>
@@ -17,17 +17,9 @@
 <script setup lang="ts">
 import type { Trip } from './Interfaces';
 import { RouterLink } from 'vue-router';
+import { useTripStore } from '@/stores/trip';
 
-function formatAttendees(attendees: string[]) {
-    // display as Person1, Person2 and Person3
-    if (attendees.length === 1) {
-        return attendees[0];
-    } else if (attendees.length === 2) {
-        return attendees[0] + ' and ' + attendees[1];
-    } else if (attendees.length > 2) {
-        return attendees[0] + ', ' + attendees[1] + ' and ' + attendees[2];
-    }
-}
+const tripstore = useTripStore();
 
 const props = defineProps<{
     trip: Trip;

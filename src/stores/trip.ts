@@ -2,12 +2,7 @@ import type { Trip } from '@/components/Trip/Interfaces';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { db } from '@/firebaseInit';
-import {
-    collection,
-    onSnapshot,
-    addDoc,
-    serverTimestamp
-} from 'firebase/firestore';
+import { collection, onSnapshot, addDoc } from 'firebase/firestore';
 import { useUserStore } from './user';
 import { FirebaseAuth } from '@/firebaseInit';
 import type { Unsubscribe } from 'firebase/auth';
@@ -46,8 +41,25 @@ export const useTripStore = defineStore('trip', () => {
         });
     }
 
+    function getActiveTrip(id: string) {
+        return trips.value.find((trip) => trip.title === id);
+    }
+
+    function formatAttendees(attendees: string[]) {
+        // display as Person1, Person2 and Person3
+        if (attendees.length === 1) {
+            return attendees[0];
+        } else if (attendees.length === 2) {
+            return attendees[0] + ' and ' + attendees[1];
+        } else if (attendees.length > 2) {
+            return attendees[0] + ', ' + attendees[1] + ' and ' + attendees[2];
+        }
+    }
+
     return {
         trips,
-        addTrip
+        addTrip,
+        getActiveTrip,
+        formatAttendees
     };
 });
