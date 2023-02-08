@@ -1,4 +1,5 @@
 interface Trip {
+    id: string;
     title: string;
     description: string;
     startDate?: Date;

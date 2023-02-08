@@ -1,6 +1,6 @@
 import type { Trip } from '@/components/Trip/Interfaces';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { db } from '@/firebaseInit';
 import { collection, onSnapshot, addDoc } from 'firebase/firestore';
 import { useUserStore } from './user';
@@ -9,6 +9,7 @@ import type { Unsubscribe } from 'firebase/auth';
 
 export const useTripStore = defineStore('trip', () => {
     const trips = ref<Trip[]>([]);
+    const activeTrip = ref<Trip>();
 
     const currentUserUID = useUserStore().user?.uid;
     const tripCollection = collection(db, 'Users', currentUserUID, 'Trips');
@@ -20,7 +21,7 @@ export const useTripStore = defineStore('trip', () => {
             unsubscribe = onSnapshot(tripCollection, (querySnapshot) => {
                 trips.value = querySnapshot.docs.map((doc) => {
                     return {
-                        title: doc.id,
+                        id: doc.id,
                         ...doc.data()
                     } as Trip;
                 });
@@ -41,8 +42,8 @@ export const useTripStore = defineStore('trip', () => {
         });
     }
 
-    function getActiveTrip(id: string) {
-        return trips.value.find((trip) => trip.title === id);
+    function setActiveTrip(title: string) {
+        activeTrip.value = trips.value.find((trip) => trip.title === title);
     }
 
     function formatAttendees(attendees: string[]) {
@@ -58,8 +59,9 @@ export const useTripStore = defineStore('trip', () => {
 
     return {
         trips,
+        activeTrip,
         addTrip,
-        getActiveTrip,
+        setActiveTrip,
         formatAttendees
     };
 });

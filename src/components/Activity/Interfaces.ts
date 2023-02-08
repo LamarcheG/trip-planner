@@ -12,6 +12,7 @@ export enum ActivityCategory {
     Travel = 'Travel'
 }
 interface Activity {
+    id: string;
     title: string;
     startDate?: Date;
     endDate?: Date;

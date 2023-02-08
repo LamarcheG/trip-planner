@@ -22,7 +22,7 @@ import ActivityList from '@/components/Activity/ActivityList.vue';
 import { useActivityStore } from '@/stores/activity';
 import { useTripStore } from '@/stores/trip';
 import { useRoute } from 'vue-router';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const tripStore = useTripStore();
 const activitiesStore = useActivityStore();
@@ -36,7 +36,8 @@ const activeTrip = computed(() => {
     if (Array.isArray(route.params.id)) {
         return '0';
     } else {
-        var trip = tripStore.getActiveTrip(route.params.id);
+        tripStore.setActiveTrip(route.params.id);
+        const trip = tripStore.activeTrip;
         const orderedTrip = {
             title: trip?.title,
             description: trip?.description,
@@ -47,6 +48,10 @@ const activeTrip = computed(() => {
         };
         return orderedTrip;
     }
+});
+
+onMounted(() => {
+    activitiesStore.fetchActivities();
 });
 </script>
 
