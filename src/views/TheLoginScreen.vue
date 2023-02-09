@@ -1,18 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import LoginForm from '@/components/Login/LoginForm.vue';
-import SignUpForm from '@/components/Login/SignUpForm.vue';
-const isSigningUp = ref(false);
-
-function getCurrentComponent() {
-    if (isSigningUp.value) {
-        return SignUpForm;
-    } else {
-        return LoginForm;
-    }
-}
-</script>
-
 <template>
     <div class="formContainer">
         <component :is="getCurrentComponent()"></component>
@@ -33,16 +18,32 @@ function getCurrentComponent() {
     </div>
 </template>
 
+<script setup lang="ts">
+import { ref } from 'vue';
+import LoginForm from '@/components/Login/LoginForm.vue';
+import SignUpForm from '@/components/Login/SignUpForm.vue';
+const isSigningUp = ref(false);
+
+function getCurrentComponent() {
+    if (isSigningUp.value) {
+        return SignUpForm;
+    } else {
+        return LoginForm;
+    }
+}
+</script>
 <style scoped>
 .formContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #202020;
+    background-color: var(--color-background-soft);
     padding: 3rem 2rem;
     width: 70%;
+    height: 100%;
     border-radius: 10px;
+    margin: 0 auto;
 }
 .btn-login {
     width: 12rem;

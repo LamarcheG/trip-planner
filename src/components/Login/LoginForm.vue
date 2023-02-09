@@ -29,6 +29,11 @@ function login() {
 </template>
 
 <style scoped>
+h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
 label {
     margin-top: 1rem;
     font-size: 1rem;

@@ -1,16 +1,19 @@
 <template>
     <div>
-        <ul class="infoContainer">
-            <div v-for="(value, key) in activeTrip">
-                <li v-if="value !== null" class="info">
-                    <h2>{{ key }}</h2>
-                    <p v-if="Array.isArray(value)">
-                        {{ tripStore.formatAttendees(value) }}
-                    </p>
-                    <p v-else>{{ value }}</p>
-                </li>
-            </div>
-        </ul>
+        <div class="infoContainer">
+            <h1>{{ capitalizedTitle }}</h1>
+            <ul>
+                <div v-for="(value, key) in activeTrip">
+                    <li v-if="value !== null" class="info">
+                        <h2>{{ key }}</h2>
+                        <p v-if="Array.isArray(value)">
+                            {{ tripStore.formatAttendees(value) }}
+                        </p>
+                        <p v-else>{{ value }}</p>
+                    </li>
+                </div>
+            </ul>
+        </div>
         <ActivityForm />
         <ActivityList :activities="activitiesStore.activities" />
     </div>
@@ -28,8 +31,12 @@ const tripStore = useTripStore();
 const activitiesStore = useActivityStore();
 const route = useRoute();
 
-const activities = computed(() => {
-    return activitiesStore.activities;
+const capitalizedTitle = computed(() => {
+    if (!tripStore.activeTrip) return;
+    return (
+        tripStore.activeTrip.title.charAt(0).toUpperCase() +
+        tripStore.activeTrip.title.slice(1)
+    );
 });
 
 const activeTrip = computed(() => {
@@ -39,7 +46,6 @@ const activeTrip = computed(() => {
         tripStore.setActiveTrip(route.params.id);
         const trip = tripStore.activeTrip;
         const orderedTrip = {
-            title: trip?.title,
             description: trip?.description,
             startDate: trip?.startDate,
             endDate: trip?.endDate,
@@ -66,7 +72,7 @@ h1 {
     width: 50%;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #3f3f3f;
+    background-color: var(--color-border);
     border-radius: 10px;
 }
 .info {

@@ -71,6 +71,7 @@ var activity = undefined;
 
 function createActivity() {
     activity = {
+        id: '',
         title: title.value,
         startDate: startDate.value,
         endDate: endDate.value,
@@ -106,6 +107,10 @@ function addAttendee() {
 #Activity {
     margin: 3rem auto;
 }
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
 .inputField {
     font-size: 1rem;
     width: 60%;
@@ -134,7 +139,7 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #202020;
+    background-color: var(--color-background-soft);
     padding: 3rem 6rem;
     border-radius: 10px;
     width: 50%;
@@ -148,7 +153,7 @@ form {
     padding: 1rem 1rem;
     font-size: 1rem;
     cursor: pointer;
-    background-color: #313438;
+    background-color: var(--color-border);
     margin-top: 2rem;
 }
 </style>
