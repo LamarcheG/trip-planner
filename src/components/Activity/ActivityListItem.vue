@@ -1,5 +1,23 @@
 <template>
     <div class="infoContainer">
+        <div class="btn-row">
+            <button type="button" @click="ModifyItem">Modify</button>
+            <button
+                type="button"
+                v-if="!confirmDeleteWindow"
+                @click="() => (confirmDeleteWindow = !confirmDeleteWindow)"
+            >
+                X
+            </button>
+            <div v-if="confirmDeleteWindow">
+                <button type="button" @click="confirmDelete(true)">
+                    Delete
+                </button>
+                <button type="button" @click="confirmDelete(false)">
+                    Cancel
+                </button>
+            </div>
+        </div>
         <ul v-for="(value, key) in formattedActivities">
             <li v-if="value !== null" class="info">
                 <h2>{{ key }}</h2>
@@ -14,8 +32,25 @@
 
 <script setup lang="ts">
 import type { Activity } from './Interfaces';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import { useActivityStore } from '@/stores/activity';
 
+const confirmDeleteWindow = ref(false);
+const activitystore = useActivityStore();
+
+const props = defineProps<{
+    activity: Activity;
+}>();
+
+function ModifyItem() {
+    console.log('Modify Item');
+}
+function confirmDelete(confirm: boolean) {
+    if (confirm) {
+        activitystore.deleteActivity(props.activity.id);
+    }
+    confirmDeleteWindow.value = false;
+}
 function formatAttendees(attendees: string[]) {
     // display as Person1, Person2 and Person3
     if (attendees.length === 1) {
@@ -39,13 +74,25 @@ const formattedActivities = computed(() => {
     };
     return orderedActivity;
 });
-
-const props = defineProps<{
-    activity: Activity;
-}>();
 </script>
 
 <style scoped>
+.btn-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.btn-row button {
+    padding: 10px 20px;
+    height: 2rem;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--color-border);
+    color: white;
+}
+.btn-row button:hover {
+    background-color: var(--color-background);
+}
 .infoContainer {
     display: flex;
     flex-direction: column;

@@ -2,7 +2,21 @@
     <div class="infoContainer">
         <div class="btn-row">
             <button type="button" @click="ModifyItem">Modify</button>
-            <button type="button" @click="DeleteItem">X</button>
+            <button
+                type="button"
+                v-if="!confirmDeleteWindow"
+                @click="() => (confirmDeleteWindow = !confirmDeleteWindow)"
+            >
+                X
+            </button>
+            <div v-if="confirmDeleteWindow">
+                <button type="button" @click="confirmDelete(true)">
+                    Delete
+                </button>
+                <button type="button" @click="confirmDelete(false)">
+                    Cancel
+                </button>
+            </div>
         </div>
         <RouterLink :to="{ name: 'activities', params: { id: trip.title } }">
             <ul v-for="(value, key) in formattedTrips">
@@ -22,13 +36,14 @@
 import type { Trip } from './Interfaces';
 import { RouterLink } from 'vue-router';
 import { useTripStore } from '@/stores/trip';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
     trip: Trip;
 }>();
 
 const tripstore = useTripStore();
+const confirmDeleteWindow = ref(false);
 
 const formattedTrips = computed(() => {
     const orderedTrip = {
@@ -45,8 +60,12 @@ const formattedTrips = computed(() => {
 function ModifyItem() {
     console.log('Modify', props.trip.id);
 }
-function DeleteItem() {
-    console.log('Delete', props.trip.id);
+
+function confirmDelete(confirm: boolean) {
+    if (confirm) {
+        tripstore.deleteTrip(props.trip.id);
+    }
+    confirmDeleteWindow.value = false;
 }
 </script>
 
@@ -61,7 +80,7 @@ function DeleteItem() {
     height: 2rem;
     border-radius: 5px;
     border: none;
-    background-color: var(--color-background-soft);
+    background-color: var(--color-border);
     color: white;
 }
 .btn-row button:hover {
@@ -74,7 +93,7 @@ function DeleteItem() {
     width: 50%;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: var(--color-border);
+    background-color: var(--color-background-soft);
     border-radius: 10px;
 }
 .info {

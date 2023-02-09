@@ -2,7 +2,14 @@ import type { Trip } from '@/components/Trip/Interfaces';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { db } from '@/firebaseInit';
-import { collection, onSnapshot, addDoc } from 'firebase/firestore';
+import {
+    collection,
+    onSnapshot,
+    addDoc,
+    deleteDoc,
+    doc,
+    updateDoc
+} from 'firebase/firestore';
 import { useUserStore } from './user';
 import { FirebaseAuth } from '@/firebaseInit';
 import type { Unsubscribe } from 'firebase/auth';
@@ -42,6 +49,41 @@ export const useTripStore = defineStore('trip', () => {
         });
     }
 
+    function deleteTrip(tripId: string) {
+        //delete subcollection
+        const tripDoc = doc(db, 'Users', currentUserUID, 'Trips', tripId);
+        const activityCollection = collection(tripDoc, 'Activities');
+        //delete all activities
+        const unsub = onSnapshot(activityCollection, (querySnapshot) => {
+            querySnapshot.docs.forEach((document) => {
+                deleteDoc(
+                    doc(
+                        db,
+                        'Users',
+                        currentUserUID,
+                        'Trips',
+                        tripId,
+                        'Activities',
+                        document.id
+                    )
+                );
+            });
+        });
+        deleteDoc(doc(db, 'Users', currentUserUID, 'Trips', tripId));
+        unsub();
+    }
+
+    function updateTrip(trip: Trip) {
+        updateDoc(doc(db, 'Users', currentUserUID, 'Trips', trip.id), {
+            title: trip.title,
+            description: trip.description,
+            startDate: trip.startDate ? trip.startDate : null,
+            endDate: trip.endDate ? trip.endDate : null,
+            budget: trip.budget ? trip.budget : null,
+            attendees: trip.attendees?.length || 0 > 0 ? trip.attendees : null
+        });
+    }
+
     function setActiveTrip(title: string) {
         activeTrip.value = trips.value.find((trip) => trip.title === title);
     }
@@ -61,6 +103,8 @@ export const useTripStore = defineStore('trip', () => {
         trips,
         activeTrip,
         addTrip,
+        deleteTrip,
+        updateTrip,
         setActiveTrip,
         formatAttendees
     };

@@ -7,6 +7,9 @@ import {
     addDoc,
     collection,
     CollectionReference,
+    deleteDoc,
+    doc,
+    updateDoc,
     onSnapshot,
     type DocumentData
 } from 'firebase/firestore';
@@ -70,10 +73,48 @@ export const useActivityStore = defineStore('activity', () => {
         });
     }
 
+    function deleteActivity(activityId: string) {
+        const activityDoc = doc(
+            db,
+            'Users',
+            currentUserUID,
+            'Trips',
+            currentId.value!,
+            'Activities',
+            activityId
+        );
+        deleteDoc(activityDoc);
+    }
+
+    function updateActivity(activity: Activity) {
+        const activityDoc = doc(
+            db,
+            'Users',
+            currentUserUID,
+            'Trips',
+            currentId.value!,
+            'Activities',
+            activity.id
+        );
+        updateDoc(activityDoc, {
+            title: activity.title,
+            description: activity.description,
+            startDate: activity.startDate ? activity.startDate : null,
+            endDate: activity.endDate ? activity.endDate : null,
+            category: activity.category ? activity.category : null,
+            address: activity.address ? activity.address : null,
+            cost: activity.cost ? activity.cost : null,
+            attendees:
+                activity.attendees?.length || 0 > 0 ? activity.attendees : null
+        });
+    }
+
     return {
         activities,
         currentId,
         fetchActivities,
-        addActivity
+        addActivity,
+        deleteActivity,
+        updateActivity
     };
 });
