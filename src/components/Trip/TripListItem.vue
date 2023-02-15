@@ -29,6 +29,11 @@
                 </li>
             </ul>
         </RouterLink>
+        <TripModifyModal
+            v-show="showModal"
+            @close-modal="closeModal"
+            :trip="props.trip"
+        />
     </div>
 </template>
 
@@ -37,6 +42,7 @@ import type { Trip } from './Interfaces';
 import { RouterLink } from 'vue-router';
 import { useTripStore } from '@/stores/trip';
 import { computed, ref } from 'vue';
+import TripModifyModal from './TripModifyModal.vue';
 
 const props = defineProps<{
     trip: Trip;
@@ -44,6 +50,7 @@ const props = defineProps<{
 
 const tripstore = useTripStore();
 const confirmDeleteWindow = ref(false);
+const showModal = ref(false);
 
 const formattedTrips = computed(() => {
     const orderedTrip = {
@@ -58,7 +65,12 @@ const formattedTrips = computed(() => {
 });
 
 function ModifyItem() {
-    console.log('Modify', props.trip.id);
+    //instantiating the modal
+    showModal.value = true;
+}
+
+function closeModal() {
+    showModal.value = false;
 }
 
 function confirmDelete(confirm: boolean) {
