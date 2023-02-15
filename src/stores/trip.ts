@@ -84,8 +84,8 @@ export const useTripStore = defineStore('trip', () => {
         });
     }
 
-    function setActiveTrip(title: string) {
-        activeTrip.value = trips.value.find((trip) => trip.title === title);
+    function setActiveTrip(id: string) {
+        activeTrip.value = trips.value.find((trip) => trip.id === id);
     }
 
     function formatAttendees(attendees: string[]) {

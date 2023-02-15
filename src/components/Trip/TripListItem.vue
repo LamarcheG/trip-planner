@@ -17,7 +17,7 @@
                 </button>
             </div>
         </div>
-        <RouterLink :to="{ name: 'activities', params: { id: trip.title } }">
+        <RouterLink :to="{ name: 'activities', params: { id: trip.id } }">
             <ul v-for="(value, key) in formattedTrips">
                 <li v-if="value !== null" class="info">
                     <h2>{{ key }}</h2>
