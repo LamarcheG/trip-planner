@@ -75,14 +75,12 @@ const attendees = ref<string[]>([]);
 var trip = undefined;
 
 onMounted(() => {
-    if (props.trip) {
-        title.value = props.trip.title;
-        startDate.value = props.trip.startDate;
-        endDate.value = props.trip.endDate;
-        description.value = props.trip.description;
-        budget.value = props.trip.budget ? props.trip.budget : 0;
-        attendees.value = props.trip.attendees ? props.trip.attendees : [];
-    }
+    title.value = props.trip.title;
+    startDate.value = props.trip.startDate;
+    endDate.value = props.trip.endDate;
+    description.value = props.trip.description;
+    budget.value = props.trip.budget ? props.trip.budget : 0;
+    attendees.value = props.trip.attendees ? props.trip.attendees : [];
 });
 
 function addAttendee() {
