@@ -27,6 +27,11 @@
                 <p v-else>{{ value }}</p>
             </li>
         </ul>
+        <ActvityModifyModal
+            v-show="showModal"
+            @close-modal="closeModal"
+            :activity-prop="props.activity"
+        />
     </div>
 </template>
 
@@ -34,16 +39,21 @@
 import type { Activity } from './Interfaces';
 import { computed, ref } from 'vue';
 import { useActivityStore } from '@/stores/activity';
+import ActvityModifyModal from './ActivityModifyModal.vue';
 
 const confirmDeleteWindow = ref(false);
 const activitystore = useActivityStore();
+const showModal = ref(false);
 
 const props = defineProps<{
     activity: Activity;
 }>();
 
 function ModifyItem() {
-    console.log('Modify Item');
+    showModal.value = true;
+}
+function closeModal() {
+    showModal.value = false;
 }
 function confirmDelete(confirm: boolean) {
     if (confirm) {
