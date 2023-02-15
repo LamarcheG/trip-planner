@@ -1,6 +1,9 @@
 <template>
     <div>
         <div class="infoContainer">
+            <button type="button" @click="modifyTrip" class="btn-modify">
+                Modify
+            </button>
             <h1>{{ capitalizedTitle }}</h1>
             <ul>
                 <div v-for="(value, key) in activeTrip">
@@ -16,6 +19,11 @@
         </div>
         <ActivityForm />
         <ActivityList :activities="activitiesStore.activities" />
+        <TripModifyModal
+            :trip="trip"
+            v-show="showModal"
+            @close-modal="closeModal"
+        />
     </div>
 </template>
 
@@ -25,11 +33,21 @@ import ActivityList from '@/components/Activity/ActivityList.vue';
 import { useActivityStore } from '@/stores/activity';
 import { useTripStore } from '@/stores/trip';
 import { useRoute } from 'vue-router';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import TripModifyModal from '@/components/Trip/TripModifyModal.vue';
 
 const tripStore = useTripStore();
 const activitiesStore = useActivityStore();
 const route = useRoute();
+const showModal = ref(false);
+
+function modifyTrip() {
+    showModal.value = true;
+}
+
+function closeModal() {
+    showModal.value = false;
+}
 
 const capitalizedTitle = computed(() => {
     if (!tripStore.activeTrip) return;
@@ -37,6 +55,10 @@ const capitalizedTitle = computed(() => {
         tripStore.activeTrip.title.charAt(0).toUpperCase() +
         tripStore.activeTrip.title.slice(1)
     );
+});
+
+const trip = computed(() => {
+    return tripStore.activeTrip!;
 });
 
 const activeTrip = computed(() => {
@@ -62,6 +84,16 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.btn-modify {
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: var(--color-background);
+    border: none;
+    border-radius: 5px;
+    color: var(--color-text);
+    font-weight: bold;
+    cursor: pointer;
+}
 h1 {
     text-align: center;
 }

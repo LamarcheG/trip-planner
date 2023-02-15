@@ -1,7 +1,7 @@
 <template>
     <div class="infoContainer">
         <div class="btn-row">
-            <button type="button" @click="ModifyItem">Modify</button>
+            <button type="button" @click="modifyItem">Modify</button>
             <button
                 type="button"
                 v-if="!confirmDeleteWindow"
@@ -30,7 +30,7 @@
         <ActvityModifyModal
             v-show="showModal"
             @close-modal="closeModal"
-            :activity-prop="props.activity"
+            :activity="props.activity"
         />
     </div>
 </template>
@@ -49,7 +49,7 @@ const props = defineProps<{
     activity: Activity;
 }>();
 
-function ModifyItem() {
+function modifyItem() {
     showModal.value = true;
 }
 function closeModal() {

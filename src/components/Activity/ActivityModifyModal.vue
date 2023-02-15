@@ -75,7 +75,7 @@ import type { Activity } from './Interfaces';
 import { ActivityCategory } from './Interfaces';
 
 const props = defineProps<{
-    activityProp: Activity;
+    activity: Activity;
 }>();
 
 const title = ref('');
@@ -93,23 +93,19 @@ var activity = undefined;
 const emit = defineEmits(['close-modal']);
 
 onMounted(() => {
-    title.value = props.activityProp.title;
-    startDate.value = props.activityProp.startDate;
-    endDate.value = props.activityProp.endDate;
-    description.value = props.activityProp.description;
-    category.value = props.activityProp.category;
-    address.value = props.activityProp.address
-        ? props.activityProp.address
-        : '';
-    cost.value = props.activityProp.cost ? props.activityProp.cost : 0;
-    attendees.value = props.activityProp.attendees
-        ? props.activityProp.attendees
-        : [];
+    title.value = props.activity.title;
+    startDate.value = props.activity.startDate;
+    endDate.value = props.activity.endDate;
+    description.value = props.activity.description;
+    category.value = props.activity.category;
+    address.value = props.activity.address ? props.activity.address : '';
+    cost.value = props.activity.cost ? props.activity.cost : 0;
+    attendees.value = props.activity.attendees ? props.activity.attendees : [];
 });
 
 function createActivity() {
     activity = {
-        id: props.activityProp.id,
+        id: props.activity?.id,
         title: title.value,
         startDate: startDate.value,
         endDate: endDate.value,

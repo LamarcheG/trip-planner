@@ -1,7 +1,6 @@
 <template>
     <div class="infoContainer">
         <div class="btn-row">
-            <button type="button" @click="ModifyItem">Modify</button>
             <button
                 type="button"
                 v-if="!confirmDeleteWindow"
@@ -29,11 +28,6 @@
                 </li>
             </ul>
         </RouterLink>
-        <TripModifyModal
-            v-show="showModal"
-            @close-modal="closeModal"
-            :trip="props.trip"
-        />
     </div>
 </template>
 
@@ -42,7 +36,6 @@ import type { Trip } from './Interfaces';
 import { RouterLink } from 'vue-router';
 import { useTripStore } from '@/stores/trip';
 import { computed, ref } from 'vue';
-import TripModifyModal from './TripModifyModal.vue';
 
 const props = defineProps<{
     trip: Trip;
@@ -50,7 +43,6 @@ const props = defineProps<{
 
 const tripstore = useTripStore();
 const confirmDeleteWindow = ref(false);
-const showModal = ref(false);
 
 const formattedTrips = computed(() => {
     const orderedTrip = {
@@ -63,15 +55,6 @@ const formattedTrips = computed(() => {
     };
     return orderedTrip;
 });
-
-function ModifyItem() {
-    //instantiating the modal
-    showModal.value = true;
-}
-
-function closeModal() {
-    showModal.value = false;
-}
 
 function confirmDelete(confirm: boolean) {
     if (confirm) {
