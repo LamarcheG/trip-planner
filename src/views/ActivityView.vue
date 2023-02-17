@@ -1,9 +1,11 @@
 <template>
     <div>
         <div class="infoContainer">
-            <button type="button" @click="modifyTrip" class="btn-modify">
-                Modify
-            </button>
+            <div class="btn-row">
+                <button type="button" @click="modifyTrip" class="btn-modify">
+                    Modify
+                </button>
+            </div>
             <h1>{{ capitalizedTitle }}</h1>
             <ul>
                 <div v-for="(value, key) in activeTrip">
@@ -17,7 +19,7 @@
                 </div>
             </ul>
         </div>
-        <div class="infoContainer">
+        <div>
             <h1 :class="{ budgetExceeded: budgetIsExceeded }">
                 Remaining Budget: {{ remainingBudget }}
             </h1>
@@ -107,15 +109,21 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.btn-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 .btn-modify {
     margin: 1rem;
-    padding: 0.5rem;
     background-color: var(--color-background);
     border: none;
-    border-radius: 5px;
     color: var(--color-text);
     font-weight: bold;
     cursor: pointer;
+    padding: 10px 20px;
+    height: 2rem;
+    border-radius: 5px;
 }
 h1 {
     text-align: center;
@@ -124,8 +132,8 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
-    margin: 2rem auto;
+    width: 30%;
+    margin: 3rem auto;
     padding: 2rem;
     background-color: var(--color-border);
     border-radius: 10px;

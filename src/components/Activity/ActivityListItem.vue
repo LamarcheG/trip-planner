@@ -1,5 +1,5 @@
 <template>
-    <div class="infoContainer">
+    <li class="infoContainer">
         <div class="btn-row">
             <button type="button" @click="modifyItem">Modify</button>
             <button
@@ -32,7 +32,7 @@
             @close-modal="closeModal"
             :activity="activity"
         />
-    </div>
+    </li>
 </template>
 
 <script setup lang="ts">
@@ -107,8 +107,7 @@ const formattedActivities = computed(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
-    margin: 2rem auto;
+    width: 100%;
     padding: 2rem;
     background-color: var(--color-background-soft);
     border-radius: 10px;
