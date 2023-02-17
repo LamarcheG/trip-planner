@@ -85,7 +85,7 @@ function confirmDelete(confirm: boolean) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
+    width: 100%;
     margin: 2rem auto;
     padding: 2rem;
     background-color: var(--color-background-soft);

@@ -1,11 +1,11 @@
 <template>
-    <ul>
+    <TransitionGroup name="activityList" tag="ul" class="activityList">
         <ActivityListItem
             v-for="activity in activities"
             :key="activity.title"
             :activity="activity"
         />
-    </ul>
+    </TransitionGroup>
 </template>
 
 <script setup lang="ts">
@@ -18,11 +18,20 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-ul {
+.activityList {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 2rem 3rem;
     width: 70%;
     margin: 5rem auto;
+}
+.activityList-enter-active,
+.activityList-leave-active {
+    transition: all 0.5s ease;
+}
+.activityList-enter-from,
+.activityList-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
 }
 </style>
