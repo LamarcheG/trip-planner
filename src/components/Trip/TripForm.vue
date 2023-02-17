@@ -2,11 +2,11 @@
     <form @submit.prevent="createTrip" id="Trip">
         <h1>Trip</h1>
         <div class="inputField">
-            <label for="title">Title</label>
+            <label for="title" class="required">Title</label>
             <input type="text" id="title" v-model="title" required />
         </div>
         <div class="inputField">
-            <label for="description">Description</label>
+            <label for="description" class="required">Description</label>
             <input
                 type="text"
                 id="description"
@@ -23,8 +23,8 @@
             <input type="date" id="endDate" v-model="endDate" />
         </div>
         <div class="inputField">
-            <label for="budget">Budget</label>
-            <input type="number" id="budget" v-model="budget" />
+            <label for="budget" class="required">Budget</label>
+            <input type="number" id="budget" v-model="budget" required />
         </div>
         <div class="inputField">
             <label for="attendee">Attendees</label>
@@ -138,5 +138,10 @@ form {
     cursor: pointer;
     background-color: var(--color-border);
     margin-top: 2rem;
+}
+.required::after {
+    content: '*';
+    color: red;
+    margin-left: 5px;
 }
 </style>

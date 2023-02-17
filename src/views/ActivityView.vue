@@ -17,6 +17,11 @@
                 </div>
             </ul>
         </div>
+        <div class="infoContainer">
+            <h1 :class="{ budgetExceeded: budgetIsExceeded }">
+                Remaining Budget: {{ remainingBudget }}
+            </h1>
+        </div>
         <ActivityForm />
         <ActivityList :activities="activitiesStore.activities" />
         <TripModifyModal
@@ -78,6 +83,24 @@ const activeTrip = computed(() => {
     }
 });
 
+const remainingBudget = computed(() => {
+    return calculateRemainingBudget();
+});
+
+const budgetIsExceeded = computed(() => {
+    return remainingBudget.value < 0;
+});
+
+function calculateRemainingBudget() {
+    if (!tripStore.activeTrip) return 0;
+
+    let totalExpenses = 0;
+    activitiesStore.activities.forEach((activity) => {
+        totalExpenses += activity.cost ? activity.cost : 0;
+    });
+    return tripStore.activeTrip.budget! - totalExpenses!;
+}
+
 onMounted(() => {
     activitiesStore.fetchActivities();
 });
@@ -118,5 +141,8 @@ h2 {
 }
 h2::after {
     content: ':';
+}
+.budgetExceeded {
+    color: red;
 }
 </style>

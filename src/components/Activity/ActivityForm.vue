@@ -2,11 +2,11 @@
     <form @submit.prevent="createActivity" id="Activity">
         <h1>Activity</h1>
         <div class="inputField">
-            <label for="title">Title</label>
+            <label for="title" class="required">Title</label>
             <input type="text" id="title" v-model="title" required />
         </div>
         <div class="inputField">
-            <label for="description">Description</label>
+            <label for="description" class="required">Description</label>
             <input
                 type="text"
                 id="description"
@@ -155,5 +155,10 @@ form {
     cursor: pointer;
     background-color: var(--color-border);
     margin-top: 2rem;
+}
+.required::after {
+    content: '*';
+    color: red;
+    margin-left: 5px;
 }
 </style>

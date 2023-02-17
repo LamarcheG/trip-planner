@@ -4,7 +4,7 @@ interface Trip {
     description: string;
     startDate?: Date;
     endDate?: Date;
-    budget?: number;
+    budget: number;
     attendees?: string[];
 }
 
