@@ -8,7 +8,7 @@
             >
                 Close
             </button>
-            <form @submit.prevent="createActivity" id="ActivityModal">
+            <form @submit.prevent="createActivity" id="formModal">
                 <h1>Activity</h1>
                 <div class="inputField">
                     <label for="title">Title</label>
@@ -60,9 +60,7 @@
                         {{ attendee }}
                     </li>
                 </ul>
-                <button type="submit" class="btn-submit" form="ActivityModal">
-                    Submit
-                </button>
+                <button type="submit" class="btn-submit">Submit</button>
             </form>
         </div>
     </div>
@@ -159,9 +157,6 @@ function addAttendee() {
     border-radius: 5px;
     cursor: pointer;
 }
-#ActivityModal {
-    margin: 3rem auto;
-}
 h1 {
     text-align: center;
     margin-bottom: 2rem;
@@ -189,7 +184,7 @@ select {
     font-size: 1rem;
     outline: none;
 }
-form {
+#formModal {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -197,7 +192,6 @@ form {
     background-color: var(--color-background-soft);
     padding: 3rem 6rem;
     border-radius: 10px;
-    width: 50%;
     margin: 0 auto;
 }
 .btn-submit {

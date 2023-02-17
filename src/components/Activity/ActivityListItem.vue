@@ -30,7 +30,7 @@
         <ActvityModifyModal
             v-show="showModal"
             @close-modal="closeModal"
-            :activity="props.activity"
+            :activity="activity"
         />
     </div>
 </template>
