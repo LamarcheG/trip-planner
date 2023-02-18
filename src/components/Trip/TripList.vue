@@ -19,7 +19,7 @@ const props = defineProps<{
     padding: 0;
     grid-template-columns: 1fr 1fr;
     grid-gap: 2rem 3rem;
-    width: 50%;
+    width: 40%;
     margin: 5rem auto;
 }
 .tripList-enter-active,

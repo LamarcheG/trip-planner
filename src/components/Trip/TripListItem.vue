@@ -17,15 +17,20 @@
                 </button>
             </div>
         </div>
-        <RouterLink :to="{ name: 'activities', params: { id: trip.id } }">
-            <ul v-for="(value, key) in formattedTrips">
-                <li v-if="value !== null" class="info">
-                    <h2>{{ key }}</h2>
-                    <p v-if="Array.isArray(value)">
-                        {{ tripstore.formatAttendees(value) }}
-                    </p>
-                    <p v-else>{{ value }}</p>
-                </li>
+        <RouterLink
+            :to="{ name: 'activities', params: { id: trip.id } }"
+            class="link"
+        >
+            <ul class="propertyList">
+                <template v-for="(value, key) in formattedTrips">
+                    <li v-if="value !== null" class="info">
+                        <h2>{{ key }}</h2>
+                        <p v-if="Array.isArray(value)">
+                            {{ tripstore.formatAttendees(value) }}
+                        </p>
+                        <p v-else>{{ value }}</p>
+                    </li>
+                </template>
             </ul>
         </RouterLink>
     </div>
@@ -82,12 +87,9 @@ function confirmDelete(confirm: boolean) {
     background-color: var(--color-background);
 }
 .infoContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
     margin: 2rem auto;
-    padding: 2rem;
+    padding: 1rem;
     background-color: var(--color-background-soft);
     border-radius: 10px;
 }
@@ -95,12 +97,22 @@ function confirmDelete(confirm: boolean) {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     height: 3rem;
+}
+.propertyList {
+    width: 60%;
+    margin: auto;
 }
 h2 {
     margin-right: 10px;
 }
 h2::after {
     content: ':';
+}
+.link {
+    width: 100%;
+    height: 90%;
+    margin: auto;
 }
 </style>

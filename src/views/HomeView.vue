@@ -18,9 +18,13 @@ div {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 90vh;
 }
 h1 {
-    margin-bottom: 2rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+.link {
+    font-size: larger;
 }
 </style>

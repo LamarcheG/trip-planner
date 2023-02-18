@@ -18,14 +18,16 @@
                 </button>
             </div>
         </div>
-        <ul v-for="(value, key) in formattedActivities">
-            <li v-if="value !== null" class="info">
-                <h2>{{ key }}</h2>
-                <p v-if="Array.isArray(value)">
-                    {{ formatAttendees(value) }}
-                </p>
-                <p v-else>{{ value }}</p>
-            </li>
+        <ul>
+            <template v-for="(value, key) in formattedActivities">
+                <li v-if="value !== null" class="info">
+                    <h2>{{ key }}</h2>
+                    <p v-if="Array.isArray(value)">
+                        {{ formatAttendees(value) }}
+                    </p>
+                    <p v-else>{{ value }}</p>
+                </li>
+            </template>
         </ul>
         <ActvityModifyModal
             v-show="showModal"
