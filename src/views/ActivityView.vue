@@ -7,8 +7,8 @@
                 </button>
             </div>
             <h1>{{ capitalizedTitle }}</h1>
-            <ul>
-                <div v-for="(value, key) in activeTrip">
+            <ul class="tripProperties">
+                <template v-for="(value, key) in activeTrip">
                     <li v-if="value !== null" class="info">
                         <h2>{{ key }}</h2>
                         <p v-if="Array.isArray(value)">
@@ -16,7 +16,7 @@
                         </p>
                         <p v-else>{{ value }}</p>
                     </li>
-                </div>
+                </template>
             </ul>
         </div>
         <div>
@@ -115,7 +115,6 @@ onMounted(() => {
     width: 100%;
 }
 .btn-modify {
-    margin: 1rem;
     background-color: var(--color-background);
     border: none;
     color: var(--color-text);
@@ -127,6 +126,7 @@ onMounted(() => {
 }
 h1 {
     text-align: center;
+    margin-bottom: 1rem;
 }
 .infoContainer {
     display: flex;
@@ -134,14 +134,19 @@ h1 {
     align-items: center;
     width: 30%;
     margin: 3rem auto;
-    padding: 2rem;
+    padding: 1rem;
     background-color: var(--color-border);
     border-radius: 10px;
+}
+.tripProperties {
+    width: 35%;
+    margin: auto;
 }
 .info {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     height: 3rem;
 }
 h2 {
