@@ -19,13 +19,23 @@
                 </template>
             </ul>
         </div>
-        <div>
-            <h1 :class="{ budgetExceeded: budgetIsExceeded }">
+        <div class="centered">
+            <p :class="{ budgetExceeded: budgetIsExceeded }" class="budget">
                 Remaining Budget: {{ remainingBudget }}
-            </h1>
+            </p>
         </div>
-        <ActivityForm />
         <ActivityList :activities="activitiesStore.activities" />
+        <ActivityForm v-if="showForm" @close-form="closeForm" />
+        <div class="centered">
+            <button
+                v-if="!showForm"
+                type="button"
+                @click="showForm = !showForm"
+                class="btn-add"
+            >
+                Add Activity
+            </button>
+        </div>
         <TripModifyModal
             :trip="trip"
             v-show="showModal"
@@ -47,6 +57,7 @@ const tripStore = useTripStore();
 const activitiesStore = useActivityStore();
 const route = useRoute();
 const showModal = ref(false);
+const showForm = ref(false);
 
 function modifyTrip() {
     showModal.value = true;
@@ -54,6 +65,10 @@ function modifyTrip() {
 
 function closeModal() {
     showModal.value = false;
+}
+
+function closeForm() {
+    showForm.value = false;
 }
 
 const capitalizedTitle = computed(() => {
@@ -109,20 +124,35 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.budget {
+    font-size: 2rem;
+}
+.centered {
+    display: flex;
+    justify-content: center;
+}
 .btn-row {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 .btn-modify {
-    background-color: var(--color-background);
+    background-color: var(--color-border);
+    color: white;
     border: none;
-    color: var(--color-text);
-    font-weight: bold;
     cursor: pointer;
     padding: 10px 20px;
-    height: 2rem;
     border-radius: 5px;
+}
+.btn-add {
+    background-color: var(--color-background-soft);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: larger;
+    padding: 20px 30px;
+    border-radius: 5px;
+    border: 2px solid hsla(160, 100%, 37%, 1);
 }
 h1 {
     text-align: center;
@@ -133,9 +163,9 @@ h1 {
     flex-direction: column;
     align-items: center;
     width: 30%;
-    margin: 3rem auto;
+    margin: 5rem auto;
     padding: 1rem;
-    background-color: var(--color-border);
+    background-color: var(--color-background-soft);
     border-radius: 10px;
 }
 .tripProperties {
@@ -147,7 +177,8 @@ h1 {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 3rem;
+    min-height: 3rem;
+    height: 100%;
 }
 h2 {
     margin-right: 10px;

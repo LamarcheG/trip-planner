@@ -72,7 +72,7 @@ function confirmDelete(confirm: boolean) {
 <style scoped>
 .btn-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
 }
 .btn-row button {
@@ -98,7 +98,8 @@ function confirmDelete(confirm: boolean) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 3rem;
+    min-height: 3rem;
+    height: 100%;
 }
 .propertyList {
     width: 60%;

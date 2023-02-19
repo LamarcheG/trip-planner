@@ -18,7 +18,7 @@
                 </button>
             </div>
         </div>
-        <ul>
+        <ul class="propertyList">
             <template v-for="(value, key) in formattedActivities">
                 <li v-if="value !== null" class="info">
                     <h2>{{ key }}</h2>
@@ -110,16 +110,25 @@ const formattedActivities = computed(() => {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 2rem;
+    padding: 1rem;
     background-color: var(--color-background-soft);
     border-radius: 10px;
     color: var(--color-text);
 }
+.propertyList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
 .info {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 3rem;
+    justify-content: space-between;
+    min-height: 3rem;
+    height: 100%;
 }
 h2 {
     margin-right: 10px;

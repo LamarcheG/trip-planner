@@ -22,7 +22,7 @@ const props = defineProps<{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 2rem 3rem;
-    width: 70%;
+    width: 50%;
     margin: 5rem auto;
 }
 .activityList-enter-active,

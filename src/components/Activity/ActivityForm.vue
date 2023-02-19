@@ -67,6 +67,8 @@ const cost = ref(0);
 const attendeeInput = ref('');
 const attendees = ref<string[]>([]);
 
+const emit = defineEmits(['close-form']);
+
 var activity = undefined;
 
 function createActivity() {
@@ -83,7 +85,7 @@ function createActivity() {
     };
 
     useActivityStore().addActivity(activity);
-
+    emit('close-form');
     resetForm();
 }
 function resetForm() {
