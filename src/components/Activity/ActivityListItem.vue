@@ -78,7 +78,7 @@ const formattedActivities = computed(() => {
     const orderedActivity = {
         title: props.activity?.title,
         description: props.activity?.description,
-        categpry: props.activity?.category,
+        category: props.activity?.category,
         cost: props.activity?.cost,
         startDate: props.activity?.startDate,
         endDate: props.activity?.endDate,
